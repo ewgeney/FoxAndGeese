@@ -1,7 +1,7 @@
 package com.example.foxandgeese;
 
 public class Coordinates {
-    private float step = 165; //как получить PlayingField поле step?
+    private float step = 165; //как получить из PlayingField поле step?
 
     public float [] a3 = {step*-3, step*1};
     public float [] a4 = {step*-3, step*0};

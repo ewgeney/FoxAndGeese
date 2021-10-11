@@ -76,8 +76,7 @@ public class GameActivity extends AppCompatActivity {
                 b4_free.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            float[] floats = {45, 1030};
-                            Move(fox, floats);
+                            Move(fox, currentCoordinates.b4);
                         }
                     });
 
