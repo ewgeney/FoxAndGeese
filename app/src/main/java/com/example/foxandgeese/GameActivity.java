@@ -16,7 +16,7 @@ import com.example.foxandgeese.Fields.PlayingField;
 public class GameActivity extends AppCompatActivity {
     private TextView serviceInfoView;
     Coordinates currentCoordinates;
-    private ImageView fieldImageView;
+    //private ImageView fieldImageView;
 
     private ImageView fox;
     private ImageView goose1;
@@ -112,7 +112,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void Initialization(){
         serviceInfoView = findViewById(R.id.serviceInfo);
-        fieldImageView = findViewById(R.id.fieldImageView);
+        //fieldImageView = findViewById(R.id.fieldImageView);
 
         fox = findViewById(R.id.foxImageView);
         goose1 = findViewById(R.id.gooseImageView1);

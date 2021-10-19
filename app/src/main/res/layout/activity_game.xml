@@ -14,17 +14,17 @@
         android:id="@+id/serviceInfo"
         android:text="null"/>
 
-<!--    <com.example.foxandgeese.Fields.PlayingField
+    <com.example.foxandgeese.Fields.PlayingField
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>-->
+        android:layout_height="match_parent"/>
 
-    <ImageView
+<!--    <ImageView
         android:id="@+id/fieldImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srcCompat="@drawable/field"
         android:scaleType="centerInside"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp" />-->
 
     <ImageView
         android:id="@+id/a3_free"
