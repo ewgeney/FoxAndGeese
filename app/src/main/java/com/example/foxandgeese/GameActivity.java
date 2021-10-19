@@ -1,16 +1,22 @@
 package com.example.foxandgeese;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.Canvas;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.foxandgeese.Fields.Coordinates;
+import com.example.foxandgeese.Fields.PlayingField;
+
 public class GameActivity extends AppCompatActivity {
     private TextView serviceInfoView;
-    Coordinates currentCoordinates = new Coordinates();
+    Coordinates currentCoordinates;
+    private ImageView fieldImageView;
 
     private ImageView fox;
     private ImageView goose1;
@@ -66,29 +72,36 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        currentCoordinates = new Coordinates();
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        float x0 = metrics.widthPixels/2;
+        float y0 = metrics.heightPixels/2;
 
         Initialization();
+
+        serviceInfoView.setText(
+                "fox_X = " + fox.getX()+
+                        "\n" +"fox_Y = "+fox.getY());
+
+
+
 
         fox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                b4_free.setVisibility(1);
-                b4_free.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Move(fox, currentCoordinates.b4);
-                        }
-                    });
 
+                fox.setX(x0);
+                fox.setY(y0);
+
+
+                serviceInfoView.setText(
+                        "fox_X = " + fox.getX()+
+                                "\n" +"fox_Y = "+fox.getY());
             }
         });
-
-
-
-        serviceInfoView.setText(
-                "fox_X = " + fox.getX()+
-                "\n" +"fox_Y = "+fox.getY());
-
 
     }
 
@@ -99,6 +112,8 @@ public class GameActivity extends AppCompatActivity {
 
     public void Initialization(){
         serviceInfoView = findViewById(R.id.serviceInfo);
+        fieldImageView = findViewById(R.id.fieldImageView);
+
         fox = findViewById(R.id.foxImageView);
         goose1 = findViewById(R.id.gooseImageView1);
         goose2 = findViewById(R.id.gooseImageView2);
@@ -213,4 +228,14 @@ public class GameActivity extends AppCompatActivity {
         Move(g5_free, currentCoordinates.g5);
         }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 }

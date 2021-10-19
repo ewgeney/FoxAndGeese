@@ -1,4 +1,4 @@
-package com.example.foxandgeese;
+package com.example.foxandgeese.Fields;
 
 public class Coordinates {
     private float step = 165; //как получить из PlayingField поле step?

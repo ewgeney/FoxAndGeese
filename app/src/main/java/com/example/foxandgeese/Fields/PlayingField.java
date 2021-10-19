@@ -1,4 +1,4 @@
-package com.example.foxandgeese;
+package com.example.foxandgeese.Fields;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -19,6 +19,7 @@ public class PlayingField extends View {
         }
     }
 
+    public Canvas cCanvas;
 
     public PlayingField(Context context) {
         super(context);
@@ -31,6 +32,7 @@ public class PlayingField extends View {
     @Override
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
+        cCanvas = canvas;
         int width = canvas.getWidth();
         int height = canvas.getHeight();
         int margin = 25;

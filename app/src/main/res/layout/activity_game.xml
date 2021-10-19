@@ -14,17 +14,17 @@
         android:id="@+id/serviceInfo"
         android:text="null"/>
 
-    <com.example.foxandgeese.PlayingField
+<!--    <com.example.foxandgeese.Fields.PlayingField
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
 
- <!--   <ImageView
+    <ImageView
         android:id="@+id/fieldImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srcCompat="@drawable/field"
         android:scaleType="centerInside"
-        android:layout_margin="16dp" />-->
+        android:layout_margin="16dp" />
 
     <ImageView
         android:id="@+id/a3_free"
@@ -263,98 +263,98 @@
         android:id="@+id/foxImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/fox_24dp"
+        app:srcCompat="@drawable/fox"
         android:layout_centerInParent="true"/>
 
     <ImageView
         android:id="@+id/gooseImageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/geese_24dp"
+        app:srcCompat="@drawable/geese"
         android:layout_centerInParent="true"/>
 
     <ImageView
         android:id="@+id/gooseImageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/geese_24dp"
+        app:srcCompat="@drawable/geese"
         android:layout_centerInParent="true"/>
 
     <ImageView
         android:id="@+id/gooseImageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/geese_24dp"
+        app:srcCompat="@drawable/geese"
         android:layout_centerInParent="true"/>
 
     <ImageView
         android:id="@+id/gooseImageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/geese_24dp"
+        app:srcCompat="@drawable/geese"
         android:layout_centerInParent="true"/>
 
     <ImageView
         android:id="@+id/gooseImageView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/geese_24dp"
+        app:srcCompat="@drawable/geese"
         android:layout_centerInParent="true"/>
 
     <ImageView
         android:id="@+id/gooseImageView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/geese_24dp"
+        app:srcCompat="@drawable/geese"
         android:layout_centerInParent="true"/>
 
     <ImageView
         android:id="@+id/gooseImageView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/geese_24dp"
+        app:srcCompat="@drawable/geese"
         android:layout_centerInParent="true"/>
 
     <ImageView
         android:id="@+id/gooseImageView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/geese_24dp"
+        app:srcCompat="@drawable/geese"
         android:layout_centerInParent="true"/>
 
     <ImageView
         android:id="@+id/gooseImageView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/geese_24dp"
+        app:srcCompat="@drawable/geese"
         android:layout_centerInParent="true"/>
 
     <ImageView
         android:id="@+id/gooseImageView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/geese_24dp"
+        app:srcCompat="@drawable/geese"
         android:layout_centerInParent="true"/>
 
     <ImageView
         android:id="@+id/gooseImageView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/geese_24dp"
+        app:srcCompat="@drawable/geese"
         android:layout_centerInParent="true"/>
 
     <ImageView
         android:id="@+id/gooseImageView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/geese_24dp"
+        app:srcCompat="@drawable/geese"
         android:layout_centerInParent="true"/>
 
     <ImageView
         android:id="@+id/gooseImageView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/geese_24dp"
+        app:srcCompat="@drawable/geese"
         android:layout_centerInParent="true"/>
 
 
