@@ -1,8 +1,8 @@
-com/game/view/Field.java
- com.game.view.Field
 com/game/controller/FoxLogic.java
  com.game.controller.FoxLogic
  com.game.controller.FoxLogic$FoxInputListener
+com/game/view/Field.java
+ com.game.view.Field
 com/game/controller/GeeseLogic.java
  com.game.controller.GeeseLogic
 com/game/model/Goose.java
