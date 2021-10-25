@@ -110,6 +110,10 @@ public class Field {
         return vertices;
     }
 
+    public float getStep() {
+        return step;
+    }
+
     public float[] getA3() {
         return a3;
     }
