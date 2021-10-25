@@ -48,8 +48,8 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        /*int firstX = Gdx.input.getX();
-        int firstY = Gdx.input.getY();*/
+        int firstX = Gdx.input.getX();
+        int firstY = Gdx.graphics.getHeight() - Gdx.input.getY();
 
         if(Gdx.input.isTouched()){
             gameStarted = true;}

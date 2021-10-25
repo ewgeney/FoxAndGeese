@@ -1,13 +1,13 @@
-com/game/Main.java
- com.game.Main
+com/game/model/GameObject.java
+ com.game.model.GameObject
 com/game/view/Field.java
  com.game.view.Field
 com/game/controller/GeeseLogic.java
  com.game.controller.GeeseLogic
 com/game/model/Goose.java
  com.game.model.Goose
-com/game/model/GameObject.java
- com.game.model.GameObject
+com/game/Main.java
+ com.game.Main
 com/game/controller/FoxLogic.java
  com.game.controller.FoxLogic
  com.game.controller.FoxLogic$FoxInputListener

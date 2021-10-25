@@ -5,31 +5,23 @@ import static com.game.view.GameScreen.field;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.game.view.Field;
-import com.game.view.GameScreen;
-
-import java.io.InputStream;
 
 public class FoxLogic {
     private Polygon foxBounds;
-    float chipWidth;
-    float chipHeight;
+    float halfChipWidth;
+    float halfChipHeight;
     int gameStFlag=0;
     private final int fox=2;
 
     public FoxLogic(Polygon foxBounds, Sprite foxObject) {
         this.foxBounds = foxBounds;
-        chipWidth = foxObject.getWidth()/2;
-        chipHeight = foxObject.getHeight()/2;
+        halfChipWidth = foxObject.getWidth()/2;
+        halfChipHeight = foxObject.getHeight()/2;
     }
     private void setPosition(Polygon chip, float[] position){
-        chip.setPosition(position[0]-chipWidth, position[1]-chipHeight);
+        chip.setPosition(position[0]- halfChipWidth, position[1]- halfChipHeight);
     }
 
     public void handler(){
@@ -42,26 +34,37 @@ public class FoxLogic {
         }
     }
     public class FoxInputListener extends InputAdapter {
+        int xTouch;
+        int yTouch;
+
+        int xFox = (int) foxBounds.getX()+ (int) halfChipWidth;
+        int yFox = (int) foxBounds.getY()+ (int) halfChipHeight; //центр фишки
+
+        int area = 72; //область пикселей вокруг центра фишки
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
             //определяем нажатие на фишку
-            if ((screenX > foxBounds.getX() - 72) & (screenX < foxBounds.getX() + 72) &
-                    ((Gdx.graphics.getHeight() - screenY) < foxBounds.getY() + 72) &
-                    ((Gdx.graphics.getHeight() - screenY) > foxBounds.getY() - 72)) {
+            xTouch = screenX;
+            yTouch = Gdx.graphics.getHeight()-screenY; //инверсия по оси У
+
+
+            if (xTouch > xFox - area & xTouch < xFox + area &
+                yTouch > yFox - area & yTouch < yFox + area) {
                 //Если попал двигаем в новую позицию
 
 
                 float[][] allVertices = field.getAllVertices();
-                float [] curPos = {foxBounds.getX()+chipWidth, foxBounds.getY()+chipHeight}; //текущая позиция фишки
+                float [] curPos = {xFox, yFox}; //текущая позиция фишки
 
                 // проверка в какую позицию нужно переместить
-                int x = screenX;
-                int y = Gdx.graphics.getHeight() - screenY;
 
                 for(int i = 0; i < allVertices.length; i++){
-                    if(x < allVertices[i][0]+100 & x > allVertices[i][0]-100
-                     & y < allVertices[i][1]+100 & y > allVertices[i][1]-100){
+                    xTouch = screenX;
+                    yTouch = Gdx.graphics.getHeight()-screenY;
+                    if(xTouch < allVertices[i][0]+150 & xTouch > allVertices[i][0]-150
+                     & yTouch < allVertices[i][1]+150 & yTouch > allVertices[i][1]-150)
+                    {
 
                         setPosition(foxBounds, new float[]{allVertices[i][0], allVertices[i][1]});
                         break;
