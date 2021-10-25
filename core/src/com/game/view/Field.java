@@ -7,6 +7,47 @@ public class Field {
     private int y0 = Gdx.graphics.getHeight()/2;
     private float step = (Gdx.graphics.getWidth()-(Gdx.graphics.getWidth()/25)*2)/6;
 
+    public int [] board = new int[]       {0,0,0,
+                                           0,0,0,
+                                     0,0,0,0,0,0,0,0,0,
+                                     0,0,0,0,0,0,0,0,0,
+                                     0,0,0,0,0,0,0,0,0,
+                                           0,0,0,
+                                           0,0,0};
+    public final int A3 = 0;
+    public final int A4 = 1;
+    public final int A5 = 2;
+    public final int B3 = 3;
+    public final int B4 = 4;
+    public final int B5 = 5;
+    public final int C1 = 6;
+    public final int C2 = 7;
+    public final int C3 = 8;
+    public final int C4 = 9;
+    public final int C5 = 10;
+    public final int C6 = 11;
+    public final int C7 = 12;
+    public final int D1 = 13;
+    public final int D2 = 14;
+    public final int D3 = 15;
+    public final int D4 = 16;
+    public final int D5 = 17;
+    public final int D6 = 18;
+    public final int D7 = 19;
+    public final int E1 = 20;
+    public final int E2 = 21;
+    public final int E3 = 22;
+    public final int E4 = 23;
+    public final int E5 = 24;
+    public final int E6 = 25;
+    public final int E7 = 26;
+    public final int F3 = 27;
+    public final int F4 = 28;
+    public final int F5 = 29;
+    public final int G3 = 30;
+    public final int G4 = 31;
+    public final int G5 = 32;
+
     private float [] a3 = {x0-3*step, y0+1*step};
     private float [] a4 = {x0-3*step, y0+0*step};
     private float [] a5 = {x0-3*step, y0-1*step};
@@ -46,6 +87,13 @@ public class Field {
     private float [] g3 = {x0+3*step, y0+1*step};
     private float [] g4 = {x0+3*step, y0-0*step};
     private float [] g5 = {x0+3*step, y0-1*step};
+
+    private float[][] AllVertices = {a3, a4, a5, b3, b4, b5, c1, c2, c3, c4, c5, c6, c7,
+    d1, d2, d3, d4, d5, d6, d7, e1, e2, e3, e4, e5, e6, e7, f3, f4, f5, g3, g4, g5};
+
+    public float[][] getAllVertices() {
+        return AllVertices;
+    }
 
     public float[] getVerticesField(){
         float[][] drawField = {a3, c3, c1, e1, e3, g3, g5, e5, e7, c7, c5, a5, a3, a4, g4, d4,

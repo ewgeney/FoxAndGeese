@@ -16,6 +16,7 @@ public class GeeseLogic{
     private float chipWidth;
     private float chipHeight;
     private int gameStFlag=0;
+    private final int goose = 1;
 
     public GeeseLogic(Polygon gooseBounds, Sprite gooseObject, int index) {
         this.gooseBounds = gooseBounds;
@@ -35,42 +36,55 @@ public class GeeseLogic{
 
             if(index == 0){
                 setPosition(gooseBounds, field.getA5());
+                field.board[field.A5]=goose;
             }
             else if(index==1){
                 setPosition(gooseBounds, field.getB5());
+                field.board[field.B5]=goose;
             }
             else if(index==2){
                 setPosition(gooseBounds, field.getC5());
+                field.board[field.C5]=goose;
             }
             else if(index==3){
                 setPosition(gooseBounds, field.getD5());
+                field.board[field.D5]=goose;
             }
             else if(index==4){
                 setPosition(gooseBounds, field.getE5());
+                field.board[field.E5]=goose;
             }
             else if(index==5){
                 setPosition(gooseBounds, field.getF5());
+                field.board[field.F5]=goose;
             }
             else if(index==6){
                 setPosition(gooseBounds, field.getG5());
+                field.board[field.G5]=goose;
             }
             else if(index==7){
                 setPosition(gooseBounds, field.getC6());
+                field.board[field.C6]=goose;
             }
             else if(index==8){
                 setPosition(gooseBounds, field.getC7());
+                field.board[field.C7]=goose;
             }
             else if(index==9){
                 setPosition(gooseBounds, field.getD6());
+                field.board[field.D6]=goose;
             }
             else if(index==10){
                 setPosition(gooseBounds, field.getD7());
+                field.board[field.D7]=goose;
             }
             else if(index==11){
                 setPosition(gooseBounds, field.getE6());
+                field.board[field.E6]=goose;
             }
             else if(index==12){
                 setPosition(gooseBounds, field.getE7());
+                field.board[field.E7]=goose;
             }
         }
     }

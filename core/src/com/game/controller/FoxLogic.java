@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.game.view.Field;
 import com.game.view.GameScreen;
 
 import java.io.InputStream;
@@ -20,6 +21,7 @@ public class FoxLogic {
     float chipWidth;
     float chipHeight;
     int gameStFlag=0;
+    private final int fox=2;
 
     public FoxLogic(Polygon foxBounds, Sprite foxObject) {
         this.foxBounds = foxBounds;
@@ -34,7 +36,8 @@ public class FoxLogic {
         Gdx.input.setInputProcessor(new FoxInputListener());
 
         if (gameStarted & gameStFlag==0){
-            setPosition(foxBounds, field.getD4());
+            setPosition(foxBounds, field.getD3());
+            field.board[field.D3]=fox;
             gameStFlag = 1;
         }
     }
@@ -47,11 +50,39 @@ public class FoxLogic {
                     ((Gdx.graphics.getHeight() - screenY) < foxBounds.getY() + 72) &
                     ((Gdx.graphics.getHeight() - screenY) > foxBounds.getY() - 72)) {
                 //Если попал двигаем в новую позицию
-                float[] position = new float[]{screenX, Gdx.graphics.getHeight() - screenY};
 
-                setPosition(foxBounds, position);
+
+                float[][] allVertices = field.getAllVertices();
+                float [] curPos = {foxBounds.getX()+chipWidth, foxBounds.getY()+chipHeight}; //текущая позиция фишки
+
+                // проверка в какую позицию нужно переместить
+                int x = screenX;
+                int y = Gdx.graphics.getHeight() - screenY;
+
+                for(int i = 0; i < allVertices.length; i++){
+                    if(x < allVertices[i][0]+100 & x > allVertices[i][0]-100
+                     & y < allVertices[i][1]+100 & y > allVertices[i][1]-100){
+
+                        setPosition(foxBounds, new float[]{allVertices[i][0], allVertices[i][1]});
+                        break;
+                    }
+                    else {
+                        setPosition(foxBounds, curPos);
+                    }
+                }
                 return true;
-            } else return false;
+
+
+                //проверка не занята ли позиция
+
+
+                //проверка что позиция на 1 шаге от текущей
+                
+
+
+            }
+            else return false;
+
         }
     }
 }
