@@ -1,107 +1,219 @@
 package com.game.controller;
 
 import static com.game.Main.gameStarted;
+import static com.game.view.GameScreen.UserStep;
 import static com.game.view.GameScreen.field;
+import static com.game.view.GameScreen.fox;
+import static com.game.view.GameScreen.geese;
+import static java.lang.Thread.sleep;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
 
-public class GeeseLogic{
-    private Polygon gooseBounds;
-    private int index;
-    private float chipWidth;
-    private float chipHeight;
-    private int gameStFlag=0;
-    private final int goose = 1;
+import java.util.HashSet;
+import java.util.Iterator;
 
-    public GeeseLogic(Polygon gooseBounds, Sprite gooseObject, int index) {
-        this.gooseBounds = gooseBounds;
-        this.chipWidth = gooseObject.getWidth()/2;
-        this.chipHeight = gooseObject.getHeight()/2;
-        this.index = index;
+public class GeeseLogic extends GameLogic{
 
+    public GeeseLogic(Polygon bounds, Sprite object, int index) {
+        super(bounds, object, index);
     }
-    private void setPosition(Polygon chip, float[] position){
-        chip.setPosition(position[0]-chipWidth, position[1]-chipHeight);
+
+    @Override
+    protected void setPosition(Polygon chip, int position) {
+        super.setPosition(chip, position);
     }
 
     public void handler() {
+        if(gameStarted & newGame){
+            createStartPosition();
+            newGame = false;
+        }
+        if(!UserStep){
+            if(geese.size()>3){
+                try {
+                    sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                int[] bestMove = bestMove();
+                getIndexOnField(bestMove[0]);
+                setPosition(geese.get(bestMove[0]).bounds, bestMove[1]);
+                field.board.set(indexOnField, empPos);
+                field.board.set(bestMove[1], bestMove[0]);
+                UserStep=true;
+            }
+            //Geese loose messages
+        }
+    }
 
-        if(gameStarted & gameStFlag==0){
-            gameStFlag=1;
+    //метод поиска хода
+    private int[] bestMove(){
 
-            if(index == 0){
-                setPosition(gooseBounds, field.getA5());
-                field.board[field.A5]=goose;
+        class Move{
+            int indexGeese;
+            int indexBestMove;
+            int costBestMove=0;
+        }
+        HashSet<Move> bestMoves=new HashSet<>();
+        int costPosition=0;
+        //int indexOnField=0;
+
+        //Подсчет стоимости ячеек занятых гусями в текущей позиции
+        for (int i = 0; i < field.board.size(); i++) {
+            if (field.board.get(i)>=0){
+                costPosition+=field.boardCost.get(i);
             }
-            else if(index==1){
-                setPosition(gooseBounds, field.getB5());
-                field.board[field.B5]=goose;
+        }
+        //Вычисление лучшего хода из возможных для каждого гуся
+        for (int i = 0; i < 13; i++) {
+            if (geese.get(i)!=null){
+                possibleMove(i);
+                Move best = new Move();
+                //Подсчет стоимости всех возможных ходов и добавление лучшего в список
+                for (int s = 0; s<geese.get(i).arrayMoves.size(); s++){
+                    int newCost = costPosition - field.boardCost.get(indexOnField) + field.boardCost.get(geese.get(i).arrayMoves.get(s));
+                    if (best.costBestMove<newCost){
+                        best.indexGeese = i;
+                        best.indexBestMove = geese.get(i).arrayMoves.get(s);
+                        best.costBestMove = newCost;
+                    }
+                }
+                if (best.costBestMove-costPosition > 0){
+                    bestMoves.add(best);
+                }
             }
-            else if(index==2){
-                setPosition(gooseBounds, field.getC5());
-                field.board[field.C5]=goose;
+        }
+        Iterator<Move> iterator = bestMoves.iterator();
+        Move best = new Move();
+        while (iterator.hasNext()){
+            Move move = iterator.next();
+            if (best.costBestMove<move.costBestMove){
+                best=move;
             }
-            else if(index==3){
-                setPosition(gooseBounds, field.getD5());
-                field.board[field.D5]=goose;
+        }
+        return new int[]{best.indexGeese, best.indexBestMove};
+    }
+
+    //Метод определения возможности хода
+    private void possibleMove (int index){
+        getIndexOnField(index);
+        float [] curPos = {geese.get(index).bounds.getX()+chipWidth/2, geese.get(index).bounds.getY()+chipHeight/2};
+        float[][] allVertices = field.getAllVertices();
+        geese.get(index).arrayMoves.clear();
+
+        for(int i = 0; i < allVertices.length; i++) {
+            //шаг вверх
+            if (curPos[0] == allVertices[i][0] & curPos[1] + field.getStep() == allVertices[i][1]) {
+                if(field.board.get(i) == -1){
+                    //ход возможен
+                    geese.get(index).arrayMoves.add(i);
+                }
             }
-            else if(index==4){
-                setPosition(gooseBounds, field.getE5());
-                field.board[field.E5]=goose;
+            //шаг вправо
+            if (curPos[0] + field.getStep() == allVertices[i][0] & curPos[1] == allVertices[i][1]) {
+                if(field.board.get(i) == -1){
+                    //ход возможен
+                    geese.get(index).arrayMoves.add(i);
+                }
             }
-            else if(index==5){
-                setPosition(gooseBounds, field.getF5());
-                field.board[field.F5]=goose;
+            //шаг влево
+            if (curPos[0] - field.getStep() == allVertices[i][0] & curPos[1] == allVertices[i][1]) {
+                if(field.board.get(i) == -1){
+                    //ход возможен
+                    geese.get(index).arrayMoves.add(i);
+                }
             }
-            else if(index==6){
-                setPosition(gooseBounds, field.getG5());
-                field.board[field.G5]=goose;
+            //шаг вниз
+            if (curPos[0] == allVertices[i][0] & curPos[1] - field.getStep() == allVertices[i][1]) {
+                if(field.board.get(i) == -1){
+                    //ход возможен
+                    geese.get(index).arrayMoves.add(i);
+                }
             }
-            else if(index==7){
-                setPosition(gooseBounds, field.getC6());
-                field.board[field.C6]=goose;
-            }
-            else if(index==8){
-                setPosition(gooseBounds, field.getC7());
-                field.board[field.C7]=goose;
-            }
-            else if(index==9){
-                setPosition(gooseBounds, field.getD6());
-                field.board[field.D6]=goose;
-            }
-            else if(index==10){
-                setPosition(gooseBounds, field.getD7());
-                field.board[field.D7]=goose;
-            }
-            else if(index==11){
-                setPosition(gooseBounds, field.getE6());
-                field.board[field.E6]=goose;
-            }
-            else if(index==12){
-                setPosition(gooseBounds, field.getE7());
-                field.board[field.E7]=goose;
+        }
+        if (geese.get(index).arrayMoves.size()>1){
+            int d=0;
+            for (int move: geese.get(index).arrayMoves){
+                if (move!=0 && move!=3 && move!=6 && move!=12 && move!=20 && move!=26 && move!=30 && move!=32){
+                    if (d==0){
+                        d++;
+                        continue;
+                    }
+                    field.boardCost.put(move, field.boardCost.get(move)+50);
+                }
             }
         }
     }
-/*    public class GeeseInputListener extends InputAdapter {
 
-        @Override
-        public boolean touchDragged(int screenX, int screenY, int pointer) {
-            //определяем нажатие на фишку
-            if((screenX>gooseBounds.getX()-72)&(screenX<gooseBounds.getX()+72)&
-                    ((Gdx.graphics.getHeight() - screenY)<gooseBounds.getY()+72)&
-                    ((Gdx.graphics.getHeight() - screenY)>gooseBounds.getY()-72)) {
-                //Если попал двигаем в новую позицию
-                float[] position = new float[]{screenX, Gdx.graphics.getHeight() - screenY};
-                setPosition(gooseBounds, position);
-                return true;
-            }
-            else return false;
+    //Расстановка гусей в стартовую позицию
+    private void createStartPosition() {
+        switch (index) {
+            case 0:
+                setPosition(bounds, field.A5);
+                field.board.set(indexOnField, empPos);
+                field.board.set(field.A5, index);
+                break;
+            case 1:
+                setPosition(bounds, field.B5);
+                field.board.set(indexOnField, empPos);
+                field.board.set(field.B5, index);
+                break;
+            case 2:
+                setPosition(bounds, field.C5);
+                field.board.set(indexOnField, empPos);
+                field.board.set(field.C5, index);
+                break;
+            case 3:
+                setPosition(bounds, field.D5);
+                field.board.set(indexOnField, empPos);
+                field.board.set(field.D5, index);
+                break;
+            case 4:
+                setPosition(bounds, field.E5);
+                field.board.set(indexOnField, empPos);
+                field.board.set(field.E5, index);
+                break;
+            case 5:
+                setPosition(bounds, field.F5);
+                field.board.set(indexOnField, empPos);
+                field.board.set(field.F5, index);
+                break;
+            case 6:
+                setPosition(bounds, field.G5);
+                field.board.set(indexOnField, empPos);
+                field.board.set(field.G5, index);
+                break;
+            case 7:
+                setPosition(bounds, field.C6);
+                field.board.set(indexOnField, empPos);
+                field.board.set(field.C6, index);
+                break;
+            case 8:
+                setPosition(bounds, field.C7);
+                field.board.set(indexOnField, empPos);
+                field.board.set(field.C7, index);
+                break;
+            case 9:
+                setPosition(bounds, field.D6);
+                field.board.set(indexOnField, empPos);
+                field.board.set(field.D6, index);
+                break;
+            case 10:
+                setPosition(bounds, field.D7);
+                field.board.set(indexOnField, empPos);
+                field.board.set(field.D7, index);
+                break;
+            case 11:
+                setPosition(bounds, field.E6);
+                field.board.set(indexOnField, empPos);
+                field.board.set(field.E6, index);
+                break;
+            case 12:
+                setPosition(bounds, field.E7);
+                field.board.set(indexOnField, empPos);
+                field.board.set(field.E7, index);
+                break;
         }
-    }*/
+    }
 }

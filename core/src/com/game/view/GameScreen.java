@@ -3,30 +3,26 @@ package com.game.view;
 import static com.game.Main.gameStarted;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.game.controller.FoxLogic;
+import com.game.model.Field;
 import com.game.model.Fox;
 import com.game.model.Goose;
+
+import java.util.HashMap;
 
 public class GameScreen implements Screen {
     ShapeRenderer shapeRenderer;
     SpriteBatch batch;
     Texture foxTexture;
     Texture geeseTexture;
-    Fox fox;
-    Goose[] geese;
+    public static Fox fox;
+    public static HashMap<Integer, Goose> geese;
     public static Field field;
+    public static boolean UserStep = true;
 
 
     @Override
@@ -37,26 +33,23 @@ public class GameScreen implements Screen {
         geeseTexture = new Texture("goose.png");
         field = new Field();
 
-        fox = new Fox(foxTexture, 0, 0, 72, 72);
-
-        geese = new Goose[13];
-        for(int i=0; i < geese.length; i++){
-            geese[i] = new Goose(i, geeseTexture, 0, 0, 72, 72);
+        geese = new HashMap<>();
+        for(int i=0; i < 13; i++){
+            geese.put(i, new Goose(i, geeseTexture, 0, 0, 72, 72));
         }
+        fox = new Fox(13, foxTexture, 0, 0, 72, 72);
+
+
     }
 
     @Override
     public void render(float delta) {
-
-        int firstX = Gdx.input.getX();
-        int firstY = Gdx.graphics.getHeight() - Gdx.input.getY();
 
         if(Gdx.input.isTouched()){
             gameStarted = true;}
 
         Gdx.gl.glClearColor(255,255,255,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(0, 0, 0, 1);
@@ -65,8 +58,10 @@ public class GameScreen implements Screen {
 
         batch.begin();
         fox.draw(batch);
-        for(int i=0; i<geese.length; i++){
-            geese[i].draw(batch);
+        for(int i=0; i<13; i++){
+            if(geese.get(i)!=null){
+                geese.get(i).draw(batch);
+            }
         }
         batch.end();
     }
