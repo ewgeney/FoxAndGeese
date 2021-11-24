@@ -11,15 +11,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
+import com.game.Main;
 import com.game.view.GameScreen;
 
 import java.util.ArrayList;
 
 public class FoxLogic extends GameLogic{
     float[][] allVertices = field.getAllVertices();
+    Main game;
 
-    public FoxLogic(Polygon bounds, Sprite object, int index) {
+    public FoxLogic(Polygon bounds, Sprite object, int index, Main game) {
         super(bounds, object, index);
+        this.game = game;
     }
 
     @Override
@@ -36,6 +39,7 @@ public class FoxLogic extends GameLogic{
         if (gameStarted & newGame){
             setPosition(bounds, field.D3);
             newGame = false;
+            game.flag=0;
         }
     }
     public class FoxInputListener extends InputAdapter {
@@ -58,7 +62,7 @@ public class FoxLogic extends GameLogic{
             float [] curPos = {bounds.getX()+chipWidth/2, bounds.getY()+chipHeight/2};
             getIndexOnField(index);
 
-            //вычисляю какое положение на поле ближайшее к положению лисы
+            //вычисление в какую ячейку встает лиса
             for(int i = 0; i < allVertices.length; i++){
 
                 if(curPos[0] < allVertices[i][0]+field.getStep()/2 & curPos[0] > allVertices[i][0]-field.getStep()/2
@@ -74,8 +78,20 @@ public class FoxLogic extends GameLogic{
                     }
 
                     //Проверка что есть доступные ходы
-                    //possibleMove(index);
-
+                    if (!possibleMove()){
+                        game.flag=2; //Fox loose messages
+                        game.setScreen(game.getMenuScreen());
+                        gameStarted=false;
+                        newGame=true;
+                        break;
+                        /*for (int move:fox.arrayMoves){
+                            if (i==move){
+                                setPosition(bounds, i);
+                                UserStep=false;
+                                return true;
+                            }
+                        }*/
+                    }
 
                     //проверка что позиция на 1 шаге от текущей
                     if(allVertices[i][0] == allVertices[indexOnField][0] & abs(allVertices[i][1]-allVertices[indexOnField][1])==field.getStep()
@@ -293,17 +309,67 @@ public class FoxLogic extends GameLogic{
 
 
     private boolean possibleMove() {
+        getIndexOnField(index);
             //ход по диагонали
             for (int i = 0; i < allVertices.length; i++) {
                 if (abs(allVertices[i][1] - allVertices[indexOnField][1]) == field.getStep() && abs(allVertices[i][0] - allVertices[indexOnField][0]) == field.getStep()
-                        && indexOnField % 2 == 0 && field.board.get(i) == -1) {
-                    //ход возможен
-                    fox.arrayMoves.add(i);
+                        && indexOnField % 2 == 0) {
+                    if (field.board.get(i) == -1){
+                        //можно ходить
+                        fox.arrayMoves.add(i);
+                    }
+                    else {
+                        for (int j = 0; j < allVertices.length; j++) {
+                            if (abs(allVertices[j][1] - allVertices[indexOnField][1]) == field.getStep()*2 && abs(allVertices[j][0] - allVertices[indexOnField][0]) == field.getStep()*2){
+                                if(field.board.get(j) == -1){
+                                    //можно бить
+                                    fox.arrayMoves.add(j);
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+                //шаг вверх и вниз
+                if (allVertices[i][0] == allVertices[indexOnField][0] && abs(allVertices[i][1] - allVertices[indexOnField][1]) == field.getStep()) {
+                    if(field.board.get(i) == -1){
+                        //можно ходить
+                        fox.arrayMoves.add(i);
+                    }
+                    else {
+                        for (int j = 0; j < allVertices.length; j++) {
+                            if (allVertices[j][0] == allVertices[indexOnField][0] && abs(allVertices[j][1] - allVertices[indexOnField][1]) == field.getStep()*2){
+                                if(field.board.get(j) == -1){
+                                    //можно бить
+                                    fox.arrayMoves.add(j);
+                                }
+                            }
+                        }
+                    }
+                }
+                //шаг вправо и влево
+                if (abs(allVertices[i][0] - allVertices[indexOnField][0]) == field.getStep() && allVertices[i][1] == allVertices[indexOnField][1]) {
+                    if(field.board.get(i) == -1){
+                        //можно ходить
+                        fox.arrayMoves.add(i);
+                    }
+                    else {
+                        for (int j = 0; j < allVertices.length; j++) {
+                            if (abs(allVertices[j][0] - allVertices[indexOnField][0]) == field.getStep()*2 && allVertices[j][1] == allVertices[indexOnField][1]){
+                                if(field.board.get(j) == -1){
+                                    //можно бить
+                                    fox.arrayMoves.add(j);
+                                }
+                            }
+                        }
+                    }
                 }
             }
+
             if (!fox.arrayMoves.isEmpty()){
                 return true;
             }
-        return false;
+            else return false;
     }
 }

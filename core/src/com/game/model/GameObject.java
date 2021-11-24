@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 abstract class GameObject{
     public Polygon bounds;
-    Sprite object;
+    public Sprite object;
     public ArrayList<Integer> arrayMoves;
 
     GameObject(Texture texture, float x, float y, float width, float height) {

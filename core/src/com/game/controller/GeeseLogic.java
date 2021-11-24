@@ -3,20 +3,22 @@ package com.game.controller;
 import static com.game.Main.gameStarted;
 import static com.game.view.GameScreen.UserStep;
 import static com.game.view.GameScreen.field;
-import static com.game.view.GameScreen.fox;
 import static com.game.view.GameScreen.geese;
 import static java.lang.Thread.sleep;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
+import com.game.Main;
 
 import java.util.HashSet;
 import java.util.Iterator;
 
 public class GeeseLogic extends GameLogic{
+    Main game;
 
-    public GeeseLogic(Polygon bounds, Sprite object, int index) {
+    public GeeseLogic(Polygon bounds, Sprite object, int index, Main game) {
         super(bounds, object, index);
+        this.game=game;
     }
 
     @Override
@@ -43,7 +45,12 @@ public class GeeseLogic extends GameLogic{
                 field.board.set(bestMove[1], bestMove[0]);
                 UserStep=true;
             }
-            //Geese loose messages
+            else {
+                game.flag=1; //Geese loose messages
+                game.setScreen(game.getMenuScreen());
+                gameStarted=false;
+                newGame=true;
+            }
         }
     }
 

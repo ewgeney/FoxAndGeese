@@ -1,8 +1,6 @@
 package com.game.controller;
 
 import static com.game.view.GameScreen.field;
-import static com.game.view.GameScreen.geese;
-
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
 

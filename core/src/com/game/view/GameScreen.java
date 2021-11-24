@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.game.Main;
 import com.game.model.Field;
 import com.game.model.Fox;
 import com.game.model.Goose;
@@ -15,6 +16,7 @@ import com.game.model.Goose;
 import java.util.HashMap;
 
 public class GameScreen implements Screen {
+    Main game;
     ShapeRenderer shapeRenderer;
     SpriteBatch batch;
     Texture foxTexture;
@@ -24,6 +26,9 @@ public class GameScreen implements Screen {
     public static Field field;
     public static boolean UserStep = true;
 
+    public GameScreen(Main game) {
+        this.game = game;
+    }
 
     @Override
     public void show() {
@@ -35,9 +40,9 @@ public class GameScreen implements Screen {
 
         geese = new HashMap<>();
         for(int i=0; i < 13; i++){
-            geese.put(i, new Goose(i, geeseTexture, 0, 0, 72, 72));
+            geese.put(i, new Goose(i, geeseTexture, 0, 0, 72, 72, game));
         }
-        fox = new Fox(13, foxTexture, 0, 0, 72, 72);
+        fox = new Fox(13, foxTexture, 0, 0, 72, 72, game);
 
 
     }
@@ -87,6 +92,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        shapeRenderer.dispose();
+        batch.dispose();
     }
 }
