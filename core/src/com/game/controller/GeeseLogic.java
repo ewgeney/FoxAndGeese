@@ -4,6 +4,8 @@ import static com.game.Main.gameStarted;
 import static com.game.view.GameScreen.UserStep;
 import static com.game.view.GameScreen.field;
 import static com.game.view.GameScreen.geese;
+import static com.game.view.GameScreen.geeseMove;
+import static com.game.view.GameScreen.win;
 import static java.lang.Thread.sleep;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -34,7 +36,7 @@ public class GeeseLogic extends GameLogic{
         if(!UserStep){
             if(geese.size()>3){
                 try {
-                    sleep(100);
+                    sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -43,10 +45,12 @@ public class GeeseLogic extends GameLogic{
                 setPosition(geese.get(bestMove[0]).bounds, bestMove[1]);
                 field.board.set(indexOnField, empPos);
                 field.board.set(bestMove[1], bestMove[0]);
+                geeseMove.play(1.0f);
                 UserStep=true;
             }
             else {
                 game.flag=1; //Geese loose messages
+                win.play(1.0f);
                 game.setScreen(game.getMenuScreen());
                 gameStarted=false;
                 newGame=true;

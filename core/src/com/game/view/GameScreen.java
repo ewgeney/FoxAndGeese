@@ -4,6 +4,7 @@ import static com.game.Main.gameStarted;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,6 +26,10 @@ public class GameScreen implements Screen {
     public static HashMap<Integer, Goose> geese;
     public static Field field;
     public static boolean UserStep = true;
+    public static Sound geeseMove;
+    public static Sound foxMove;
+    public static Sound win;
+    public static Sound loose;
 
     public GameScreen(Main game) {
         this.game = game;
@@ -44,7 +49,10 @@ public class GameScreen implements Screen {
         }
         fox = new Fox(13, foxTexture, 0, 0, 72, 72, game);
 
-
+        foxMove = Gdx.audio.newSound(Gdx.files.internal("fox_move.mp3"));
+        geeseMove = Gdx.audio.newSound(Gdx.files.internal("geese_move.mp3"));
+        win = Gdx.audio.newSound(Gdx.files.internal("win.mp3"));
+        loose = Gdx.audio.newSound(Gdx.files.internal("loose.mp3"));
     }
 
     @Override
@@ -94,5 +102,9 @@ public class GameScreen implements Screen {
     public void dispose() {
         shapeRenderer.dispose();
         batch.dispose();
+        geeseMove.dispose();
+        foxMove.dispose();
+        win.dispose();
+        loose.dispose();
     }
 }

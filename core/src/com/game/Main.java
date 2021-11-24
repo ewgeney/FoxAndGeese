@@ -14,7 +14,6 @@ public class Main extends Game {
 	public Screen getGameScreen() {
 		return gameScreen;
 	}
-
 	public Screen getMenuScreen() {
 		return menuScreen;
 	}

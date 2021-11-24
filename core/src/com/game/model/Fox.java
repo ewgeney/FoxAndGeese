@@ -6,7 +6,7 @@ import com.game.Main;
 import com.game.controller.FoxLogic;
 
 public class Fox extends GameObject {
-    FoxLogic foxController;
+    private FoxLogic foxController;
 
     public Fox(int index, Texture texture, float x, float y, float width, float height, Main game) {
         super(texture, x, y, width, height);

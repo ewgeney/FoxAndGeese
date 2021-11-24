@@ -4,11 +4,15 @@ import static com.game.Main.gameStarted;
 import static com.game.view.GameScreen.UserStep;
 import static com.game.view.GameScreen.field;
 import static com.game.view.GameScreen.fox;
+import static com.game.view.GameScreen.foxMove;
 import static com.game.view.GameScreen.geese;
+import static com.game.view.GameScreen.loose;
 import static java.lang.Math.abs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
 import com.game.Main;
@@ -17,8 +21,8 @@ import com.game.view.GameScreen;
 import java.util.ArrayList;
 
 public class FoxLogic extends GameLogic{
-    float[][] allVertices = field.getAllVertices();
-    Main game;
+    private float[][] allVertices = field.getAllVertices();
+    private Main game;
 
     public FoxLogic(Polygon bounds, Sprite object, int index, Main game) {
         super(bounds, object, index);
@@ -79,7 +83,8 @@ public class FoxLogic extends GameLogic{
 
                     //Проверка что есть доступные ходы
                     if (!possibleMove()){
-                        game.flag=2; //Fox loose messages
+                        game.flag=2;//Fox loose messages
+                        loose.play(1.0f);
                         game.setScreen(game.getMenuScreen());
                         gameStarted=false;
                         newGame=true;
@@ -98,6 +103,7 @@ public class FoxLogic extends GameLogic{
                     || allVertices[i][1] == allVertices[indexOnField][1] & abs(allVertices[i][0]-allVertices[indexOnField][0])==field.getStep()){
 
                         setPosition(bounds, i);
+                        foxMove.play(1.0f);
                         UserStep=false;
                         return true;
                     }
@@ -107,6 +113,7 @@ public class FoxLogic extends GameLogic{
                     & indexOnField %2==0){
 
                         setPosition(bounds, i);
+                        foxMove.play(1.0f);
                         UserStep=false;
                         return true;
                     }
@@ -119,6 +126,7 @@ public class FoxLogic extends GameLogic{
                                         setPosition(bounds, i);
                                         GameScreen.geese.remove(field.board.get(j));
                                         field.board.set(j, empPos);
+                                        foxMove.play(1.0f);
                                         UserStep=false;
                                         return true;
                                     }
@@ -133,6 +141,7 @@ public class FoxLogic extends GameLogic{
                                     setPosition(bounds, i);
                                     GameScreen.geese.remove(field.board.get(j));
                                     field.board.set(j, empPos);
+                                    foxMove.play(1.0f);
                                     UserStep=false;
                                     return true;
                                 }
@@ -147,6 +156,7 @@ public class FoxLogic extends GameLogic{
                                     setPosition(bounds, i);
                                     GameScreen.geese.remove(field.board.get(j));
                                     field.board.set(j, empPos);
+                                    foxMove.play(1.0f);
                                     UserStep=false;
                                     return true;
                                 }
@@ -161,6 +171,7 @@ public class FoxLogic extends GameLogic{
                                     setPosition(bounds, i);
                                     GameScreen.geese.remove(field.board.get(j));
                                     field.board.set(j, empPos);
+                                    foxMove.play(1.0f);
                                     UserStep=false;
                                     return true;
                                 }
@@ -175,6 +186,7 @@ public class FoxLogic extends GameLogic{
                                     setPosition(bounds, i);
                                     GameScreen.geese.remove(field.board.get(j));
                                     field.board.set(j, empPos);
+                                    foxMove.play(1.0f);
                                     UserStep=false;
                                     return true;
                                 }
@@ -189,6 +201,7 @@ public class FoxLogic extends GameLogic{
                                     setPosition(bounds, i);
                                     GameScreen.geese.remove(field.board.get(j));
                                     field.board.set(j, empPos);
+                                    foxMove.play(1.0f);
                                     UserStep=false;
                                     return true;
                                 }
@@ -203,6 +216,7 @@ public class FoxLogic extends GameLogic{
                                     setPosition(bounds, i);
                                     GameScreen.geese.remove(field.board.get(j));
                                     field.board.set(j, empPos);
+                                    foxMove.play(1.0f);
                                     UserStep=false;
                                     return true;
                                 }
@@ -217,6 +231,7 @@ public class FoxLogic extends GameLogic{
                                     setPosition(bounds, i);
                                     GameScreen.geese.remove(field.board.get(j));
                                     field.board.set(j, empPos);
+                                    foxMove.play(1.0f);
                                     UserStep=false;
                                     return true;
                                 }
@@ -372,4 +387,5 @@ public class FoxLogic extends GameLogic{
             }
             else return false;
     }
+
 }

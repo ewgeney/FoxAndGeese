@@ -6,8 +6,9 @@ com/game/model/StartButton.java
  com.game.model.StartButton
 com/game/model/GameObject.java
  com.game.model.GameObject
-com/game/controller/GameLogic.java
- com.game.controller.GameLogic
+com/game/view/MenuScreen.java
+ com.game.view.MenuScreen
+ com.game.view.MenuScreen$ButtonListener
 com/game/model/LooseMessages.java
  com.game.model.LooseMessages
 com/game/model/WinMessages.java
@@ -20,12 +21,11 @@ com/game/controller/GeeseLogic.java
  com.game.controller.GeeseLogic$1Move
 com/game/model/Goose.java
  com.game.model.Goose
-com/game/view/MenuScreen.java
- com.game.view.MenuScreen
- com.game.view.MenuScreen$ButtonListener
 com/game/model/Fox.java
  com.game.model.Fox
 com/game/view/GameScreen.java
  com.game.view.GameScreen
 com/game/Main.java
  com.game.Main
+com/game/controller/GameLogic.java
+ com.game.controller.GameLogic
